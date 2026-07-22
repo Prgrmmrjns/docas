@@ -1,114 +1,50 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="480" viewBox="0 0 1200 480" role="img" aria-labelledby="title desc">
-  <title id="title">DOCAS</title>
-  <desc id="desc">Dose-response curve alignment: a misaligned baseline curve is pulled toward a target via synthetic points.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="480" viewBox="0 0 1200 480" role="img" aria-label="DOCAS">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="#0B1F2A"/>
       <stop offset="55%" stop-color="#123447"/>
       <stop offset="100%" stop-color="#1A4A3A"/>
     </linearGradient>
-    <linearGradient id="panel" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.10"/>
-      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.04"/>
-    </linearGradient>
-    <linearGradient id="targetStroke" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#B388FF"/>
-      <stop offset="100%" stop-color="#7C4DFF"/>
-    </linearGradient>
-    <linearGradient id="docasStroke" x1="0" y1="0" x2="1" y2="0">
+    <linearGradient id="docas" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0%" stop-color="#26C6A8"/>
       <stop offset="100%" stop-color="#00BFA5"/>
     </linearGradient>
-    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="8" result="b"/>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="b"/>
       <feMerge>
         <feMergeNode in="b"/>
         <feMergeNode in="SourceGraphic"/>
       </feMerge>
     </filter>
-    <filter id="glow">
-      <feGaussianBlur stdDeviation="3.5" result="coloredBlur"/>
-      <feMerge>
-        <feMergeNode in="coloredBlur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
-    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#9FB3C1"/>
-    </marker>
   </defs>
 
-  <!-- background -->
   <rect width="1200" height="480" rx="36" fill="url(#bg)"/>
-  <circle cx="1040" cy="70" r="160" fill="#26C6A8" opacity="0.08"/>
-  <circle cx="180" cy="420" r="180" fill="#7C4DFF" opacity="0.10"/>
+  <circle cx="1040" cy="80" r="170" fill="#26C6A8" opacity="0.07"/>
+  <circle cx="160" cy="400" r="190" fill="#7C4DFF" opacity="0.09"/>
 
-  <!-- wordmark -->
-  <text x="64" y="92" font-family="Avenir Next, Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="64" font-weight="700" fill="#F4FBFF" letter-spacing="4">DOCAS</text>
-  <text x="68" y="128" font-family="Avenir Next, Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="18" fill="#A8C3D1" letter-spacing="1.2">dose-response curve alignment</text>
+  <!-- baseline (confounded): rising -->
+  <path d="M160 320 C 360 300, 560 250, 760 200 S 980 150, 1080 130"
+        fill="none" stroke="#FF6E6E" stroke-width="7" stroke-linecap="round"
+        stroke-dasharray="14 12" opacity="0.95"/>
 
-  <!-- chart panel -->
-  <rect x="64" y="168" width="720" height="260" rx="24" fill="url(#panel)" stroke="#FFFFFF" stroke-opacity="0.12"/>
-  <!-- axes -->
-  <g stroke="#9FB3C1" stroke-width="2" stroke-linecap="round" opacity="0.85">
-    <line x1="120" y1="380" x2="740" y2="380" marker-end="url(#arrow)"/>
-    <line x1="120" y1="380" x2="120" y2="200" marker-end="url(#arrow)"/>
-  </g>
-  <text x="700" y="408" font-family="Avenir Next, Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="16" fill="#A8C3D1">dose u</text>
-  <text x="96" y="196" font-family="Avenir Next, Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="16" fill="#A8C3D1" transform="rotate(-90 96 196)">outcome</text>
+  <!-- aligned / target: lowering -->
+  <path d="M160 180 C 360 185, 560 240, 760 310 S 980 370, 1080 390"
+        fill="none" stroke="url(#docas)" stroke-width="9" stroke-linecap="round"
+        filter="url(#glow)"/>
 
-  <!-- misaligned baseline (rising / confounded) -->
-  <path d="M140 330 C 260 318, 360 300, 460 275 S 640 230, 720 205"
-        fill="none" stroke="#FF6E6E" stroke-width="5" stroke-linecap="round" stroke-dasharray="10 10" opacity="0.95"/>
-
-  <!-- target tau (correct lowering) -->
-  <path d="M140 250 C 280 252, 400 270, 500 310 S 640 355, 720 365"
-        fill="none" stroke="url(#targetStroke)" stroke-width="4" stroke-linecap="round" opacity="0.55" stroke-dasharray="2 10"/>
-
-  <!-- aligned DOCAS curve (matches target) -->
-  <path d="M140 250 C 280 252, 400 270, 500 310 S 640 355, 720 365"
-        fill="none" stroke="url(#docasStroke)" stroke-width="6.5" stroke-linecap="round" filter="url(#glow)"/>
-
-  <!-- synthetic supervision points on target -->
-  <g filter="url(#soft)">
-    <circle cx="200" cy="251" r="7" fill="#B388FF"/>
-    <circle cx="300" cy="258" r="7" fill="#A178FF"/>
-    <circle cx="400" cy="278" r="7" fill="#8E66FF"/>
-    <circle cx="500" cy="310" r="7" fill="#7C4DFF"/>
-    <circle cx="600" cy="342" r="7" fill="#6A3DE0"/>
-    <circle cx="690" cy="360" r="7" fill="#5E35B1"/>
-  </g>
-  <!-- white cores for sparkle -->
+  <!-- synthetic dots on aligned curve -->
   <g>
-    <circle cx="200" cy="251" r="2.5" fill="#FFFFFF" opacity="0.85"/>
-    <circle cx="300" cy="258" r="2.5" fill="#FFFFFF" opacity="0.85"/>
-    <circle cx="400" cy="278" r="2.5" fill="#FFFFFF" opacity="0.85"/>
-    <circle cx="500" cy="310" r="2.5" fill="#FFFFFF" opacity="0.85"/>
-    <circle cx="600" cy="342" r="2.5" fill="#FFFFFF" opacity="0.85"/>
-    <circle cx="690" cy="360" r="2.5" fill="#FFFFFF" opacity="0.85"/>
-  </g>
-
-  <!-- alignment arrows from baseline toward DOCAS -->
-  <g stroke="#F4FBFF" stroke-width="2" stroke-linecap="round" opacity="0.45">
-    <path d="M460 275 L460 305" marker-end="url(#arrow)"/>
-    <path d="M580 245 L580 330" marker-end="url(#arrow)"/>
-    <path d="M680 218 L680 355" marker-end="url(#arrow)"/>
-  </g>
-
-  <!-- legend / story cards -->
-  <g font-family="Avenir Next, Segoe UI, Helvetica Neue, Arial, sans-serif">
-    <rect x="820" y="168" width="316" height="260" rx="24" fill="url(#panel)" stroke="#FFFFFF" stroke-opacity="0.12"/>
-
-    <circle cx="856" cy="220" r="8" fill="none" stroke="#FF6E6E" stroke-width="3" stroke-dasharray="4 3"/>
-    <text x="880" y="226" font-size="18" fill="#F4FBFF">baseline (confounded)</text>
-
-    <circle cx="856" cy="270" r="8" fill="#7C4DFF"/>
-    <text x="880" y="276" font-size="18" fill="#F4FBFF">synthetic labels on target</text>
-
-    <circle cx="856" cy="320" r="8" fill="#00BFA5"/>
-    <text x="880" y="326" font-size="18" fill="#F4FBFF">aligned audit curve</text>
-
-    <text x="848" y="380" font-size="15" fill="#A8C3D1">align any fit/predict model</text>
-    <text x="848" y="402" font-size="15" fill="#A8C3D1">to a user-specified target</text>
+    <circle cx="260" cy="182" r="11" fill="#B388FF"/>
+    <circle cx="420" cy="205" r="11" fill="#9B6FFF"/>
+    <circle cx="580" cy="250" r="11" fill="#8A5CFF"/>
+    <circle cx="740" cy="302" r="11" fill="#7C4DFF"/>
+    <circle cx="900" cy="352" r="11" fill="#6A3DE0"/>
+    <circle cx="1020" cy="380" r="11" fill="#5E35B1"/>
+    <circle cx="260" cy="182" r="3.5" fill="#FFFFFF" opacity="0.9"/>
+    <circle cx="420" cy="205" r="3.5" fill="#FFFFFF" opacity="0.9"/>
+    <circle cx="580" cy="250" r="3.5" fill="#FFFFFF" opacity="0.9"/>
+    <circle cx="740" cy="302" r="3.5" fill="#FFFFFF" opacity="0.9"/>
+    <circle cx="900" cy="352" r="3.5" fill="#FFFFFF" opacity="0.9"/>
+    <circle cx="1020" cy="380" r="3.5" fill="#FFFFFF" opacity="0.9"/>
   </g>
 </svg>

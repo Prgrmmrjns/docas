@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "docas"
+version = "0.1.0"
+description = "Dose-response Curve Alignment via Synthetic augmentation"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "DOCAS authors" }]
+keywords = [
+  "machine-learning",
+  "causal",
+  "dose-response",
+  "synthetic-data",
+  "diabetes",
+  "forecasting",
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = ["numpy>=1.26"]
+
+[project.optional-dependencies]
+examples = ["scikit-learn>=1.4"]
+dev = ["pytest>=8.0", "build", "twine"]
+
+[project.urls]
+Homepage = "https://github.com/Prgrmmrjns/DOCAS"
+Documentation = "https://github.com/Prgrmmrjns/DOCAS#readme"
+Repository = "https://github.com/Prgrmmrjns/DOCAS"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+docas = ["py.typed"]

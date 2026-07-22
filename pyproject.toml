@@ -32,9 +32,9 @@ examples = ["scikit-learn>=1.4"]
 dev = ["pytest>=8.0", "build", "twine"]
 
 [project.urls]
-Homepage = "https://github.com/Prgrmmrjns/DOCAS"
-Documentation = "https://github.com/Prgrmmrjns/DOCAS#readme"
-Repository = "https://github.com/Prgrmmrjns/DOCAS"
+Homepage = "https://github.com/Prgrmmrjns/docas"
+Documentation = "https://github.com/Prgrmmrjns/docas#readme"
+Repository = "https://github.com/Prgrmmrjns/docas"
 
 [tool.setuptools.packages.find]
 where = ["src"]

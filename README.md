@@ -1,5 +1,9 @@
 # DOCAS
 
+<p align="center">
+  <img src="assets/docas.png" alt="DOCAS — dose–response curve alignment" width="720"/>
+</p>
+
 **Dose-response Curve Alignment via Synthetic augmentation** — train any
 `fit`/`predict` regressor so its interventional audit curve matches a
 user-specified target τ.

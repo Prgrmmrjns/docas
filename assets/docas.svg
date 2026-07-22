@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="480" viewBox="0 0 1200 480" role="img" aria-labelledby="title desc">
   <title id="title">DOCAS</title>
-  <desc id="desc">Dose-response curve alignment: a misaligned baseline curve is pulled toward a target � via synthetic points.</desc>
+  <desc id="desc">Dose-response curve alignment: a misaligned baseline curve is pulled toward a target via synthetic points.</desc>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="#0B1F2A"/>
@@ -61,7 +61,7 @@
   <path d="M140 330 C 260 318, 360 300, 460 275 S 640 230, 720 205"
         fill="none" stroke="#FF6E6E" stroke-width="5" stroke-linecap="round" stroke-dasharray="10 10" opacity="0.95"/>
 
-  <!-- target � (correct lowering) -->
+  <!-- target tau (correct lowering) -->
   <path d="M140 250 C 280 252, 400 270, 500 310 S 640 355, 720 365"
         fill="none" stroke="url(#targetStroke)" stroke-width="4" stroke-linecap="round" opacity="0.55" stroke-dasharray="2 10"/>
 
@@ -69,7 +69,7 @@
   <path d="M140 250 C 280 252, 400 270, 500 310 S 640 355, 720 365"
         fill="none" stroke="url(#docasStroke)" stroke-width="6.5" stroke-linecap="round" filter="url(#glow)"/>
 
-  <!-- synthetic supervision points on � -->
+  <!-- synthetic supervision points on target -->
   <g filter="url(#soft)">
     <circle cx="200" cy="251" r="7" fill="#B388FF"/>
     <circle cx="300" cy="258" r="7" fill="#A178FF"/>
@@ -103,7 +103,7 @@
     <text x="880" y="226" font-size="18" fill="#F4FBFF">baseline (confounded)</text>
 
     <circle cx="856" cy="270" r="8" fill="#7C4DFF"/>
-    <text x="880" y="276" font-size="18" fill="#F4FBFF">synthetic labels on �</text>
+    <text x="880" y="276" font-size="18" fill="#F4FBFF">synthetic labels on target</text>
 
     <circle cx="856" cy="320" r="8" fill="#00BFA5"/>
     <text x="880" y="326" font-size="18" fill="#F4FBFF">aligned audit curve</text>

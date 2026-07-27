@@ -1,10 +1,11 @@
-"""Minimal DOCAS: fix a confounded positive treatment effect."""
+"""README quickstart: align on synthetic confounded glucose data."""
 from __future__ import annotations
 
 import numpy as np
 from sklearn.ensemble import HistGradientBoostingRegressor
 
 from docas import Aligner, audit_curve
+from docas.datasets import make_synthetic_glucose
 
 
 def train(X, y, sample_weight=None):
@@ -13,25 +14,22 @@ def train(X, y, sample_weight=None):
     return m
 
 
-def main():
-    rng = np.random.default_rng(0)
-    n = 1_500
-    severity = rng.normal(size=n)
-    treatment = 0.8 * severity + rng.normal(scale=0.4, size=n)
-    y = 1.2 * severity - 0.6 * treatment + rng.normal(scale=0.25, size=n)
-    X = np.column_stack([rng.normal(size=n), treatment, rng.normal(size=n)])
+def target(X_rows, u, baseline):
+    return baseline.predict(X_rows) - 20.0 * u
 
-    def target(X_rows, u, baseline):
-        return baseline.predict(X_rows) * (1.0 - 0.4 * u)
+
+def main():
+    data = make_synthetic_glucose(n=2_000, seed=0)
+    X, y = data.X, data.y
 
     baseline = train(X, y)
     result = Aligner(
         train_fn=train,
-        intervention_idx=1,
+        treatment_idx=data.treatment_idx,
         target=target,
         context=lambda _X, yhat: yhat > np.median(yhat),
         span=1.0,
-        mode="channel",
+        mode="append",
         n_anchors=300,
         n_u=11,
         synth_weight=25.0,
@@ -39,13 +37,15 @@ def main():
 
     u = np.linspace(0, 1, 6)
     hi = X[baseline.predict(X) > np.median(baseline.predict(X))]
-    base_curve = audit_curve(baseline, hi, intervention_idx=1, u=u, span=1.0, mode="add")
-    aligned = audit_curve(result.model_, hi, intervention_idx=1, u=u, span=1.0, mode="channel")
+    base_curve = audit_curve(
+        baseline, hi, intervention_idx=data.treatment_idx, u=u, span=1.0, mode="add")
+    aligned = audit_curve(
+        result.model_, hi, intervention_idx=data.treatment_idx, u=u, span=1.0, mode="append")
 
     print(f"synthetic rows : {result.n_synth}")
     print(f"align. error   : {result.alignment_error:.4f}")
-    print(f"baseline curve : {np.round(base_curve, 3)}")
-    print(f"DOCAS curve    : {np.round(aligned, 3)}")
+    print(f"baseline curve : {np.round(base_curve, 2)}")
+    print(f"aligned curve  : {np.round(aligned, 2)}")
 
 
 if __name__ == "__main__":

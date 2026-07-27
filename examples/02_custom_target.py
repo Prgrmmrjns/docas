@@ -24,7 +24,7 @@ def main():
 
     out = Aligner(
         train_fn=train,
-        intervention_idx=2,
+        treatment_idx=2,
         target=target,
         context=lambda _X, yhat: yhat > 0.0,
         mode="add",

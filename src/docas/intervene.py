@@ -1,11 +1,11 @@
-"""Intervention channel and counterfactual probes."""
+"""Interventional probes: edit a treatment column or append a dose feature."""
 from __future__ import annotations
 
 import numpy as np
 
 
 class InterventionModel:
-    """Wrap a model trained with an extra added-dose feature (last column).
+    """Wrap a model trained with an extra dose column (last feature).
 
     Observational rows use dose ``0``; probes set dose to ``u * span``.
     """
@@ -35,13 +35,13 @@ def probe(model, X, *, intervention_idx: int, u, span: float = 1.0, mode: str = 
     mode :
         ``"add"`` — add ``u * span`` to column ``intervention_idx``.
         ``"replace"`` — set that column to ``u * span``.
-        ``"channel"`` — use :meth:`InterventionModel.predict_intervention`
-        (model must support it).
+        ``"append"`` — use :meth:`InterventionModel.predict_intervention`
+        (model must support it). ``"channel"`` is accepted as an alias.
     """
     X, u = np.asarray(X, float), np.asarray(u, float).ravel()
     if len(X) == 0:
         return np.zeros((0, u.size), float)
-    if mode == "channel" or hasattr(model, "predict_intervention"):
+    if mode in ("append", "channel") or hasattr(model, "predict_intervention"):
         return np.asarray(model.predict_intervention(X, u, span), float)
     rows = np.repeat(X, u.size, 0)
     dose = np.tile(u * float(span), len(X))
@@ -50,7 +50,7 @@ def probe(model, X, *, intervention_idx: int, u, span: float = 1.0, mode: str = 
     elif mode == "add":
         rows[:, intervention_idx] = rows[:, intervention_idx] + dose
     else:
-        raise ValueError(f"Unknown mode {mode!r}; use 'add', 'replace', or 'channel'")
+        raise ValueError(f"Unknown mode {mode!r}; use 'add', 'replace', or 'append'")
     return np.asarray(model.predict(rows), float).reshape(len(X), u.size)
 
 

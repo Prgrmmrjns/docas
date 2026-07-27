@@ -30,7 +30,7 @@ def main():
 
     result = Aligner(
         train_fn=make_train(alpha=0.5),
-        intervention_idx=0,
+        treatment_idx=0,
         target=target,
         span=1.0,
         n_anchors=100,

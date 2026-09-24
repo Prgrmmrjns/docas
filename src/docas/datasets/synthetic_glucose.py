@@ -14,11 +14,9 @@ import numpy as np
 class SyntheticGlucose:
     """Toy panel for dose–response demos.
 
-    Columns of ``X`` (by default):
-      0 — current glucose level
-      1 — treatment (insulin-like dose; ``treatment_idx``)
-      2 — carbs / meal load
-    ``y`` — change in glucose over a short horizon (negative = lowering).
+    Columns of ``X`` are current glucose, the treatment dose
+    (``treatment_idx``), and the meal load. ``y`` is the change in glucose
+    over a short horizon (negative means lowering).
     """
 
     X: np.ndarray

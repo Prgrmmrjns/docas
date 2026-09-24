@@ -58,6 +58,7 @@ pip install -e ".[examples]"
 ```
 
 Core: `numpy`. Examples and tests: `scikit-learn`.
+Documentation: [prgrmmrjns.github.io/docas](https://prgrmmrjns.github.io/docas/).
 
 ## Quick start
 

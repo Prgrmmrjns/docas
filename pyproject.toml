@@ -30,10 +30,11 @@ dependencies = ["numpy>=1.26"]
 [project.optional-dependencies]
 examples = ["scikit-learn>=1.4"]
 dev = ["pytest>=8.0", "build", "twine", "scikit-learn>=1.4"]
+docs = ["sphinx>=7", "furo>=2024.1"]
 
 [project.urls]
 Homepage = "https://github.com/Prgrmmrjns/docas"
-Documentation = "https://github.com/Prgrmmrjns/docas#readme"
+Documentation = "https://prgrmmrjns.github.io/docas/"
 Repository = "https://github.com/Prgrmmrjns/docas"
 
 [tool.setuptools.packages.find]

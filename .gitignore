@@ -5,6 +5,7 @@ __pycache__/
 .eggs/
 dist/
 build/
+docs/_build/
 .pytest_cache/
 .DS_Store
 .env

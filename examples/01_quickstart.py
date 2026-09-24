@@ -14,38 +14,30 @@ def train(X, y, sample_weight=None):
     return m
 
 
-def target(X_rows, u, baseline):
-    return baseline.predict(X_rows) - 20.0 * u
+def target(u):
+    return -20.0 * np.asarray(u, float)
 
 
 def main():
     data = make_synthetic_glucose(n=2_000, seed=0)
     X, y = data.X, data.y
+    ji = data.treatment_idx
 
     baseline = train(X, y)
     result = Aligner(
-        train_fn=train,
-        treatment_idx=data.treatment_idx,
+        train,
+        treatment_idx=ji,
         target=target,
-        context=lambda _X, yhat: yhat > np.median(yhat),
         span=1.0,
-        mode="append",
-        n_anchors=300,
-        n_u=11,
-        synth_weight=25.0,
+        synth_ratio=2.0,
+        emp_frac=0.5,
     ).fit(X, y, baseline=baseline)
 
     u = np.linspace(0, 1, 6)
-    hi = X[baseline.predict(X) > np.median(baseline.predict(X))]
-    base_curve = audit_curve(
-        baseline, hi, intervention_idx=data.treatment_idx, u=u, span=1.0, mode="add")
-    aligned = audit_curve(
-        result.model_, hi, intervention_idx=data.treatment_idx, u=u, span=1.0, mode="append")
-
-    print(f"synthetic rows : {result.n_synth}")
-    print(f"align. error   : {result.alignment_error:.4f}")
-    print(f"baseline curve : {np.round(base_curve, 2)}")
-    print(f"aligned curve  : {np.round(aligned, 2)}")
+    print("synthetic rows :", result.n_synth)
+    print("align. error   :", round(result.alignment_error, 4))
+    print("baseline curve :", np.round(audit_curve(baseline, X, treatment_idx=ji, u=u), 2))
+    print("aligned curve  :", np.round(audit_curve(result.model_, X, treatment_idx=ji, u=u), 2))
 
 
 if __name__ == "__main__":

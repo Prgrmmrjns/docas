@@ -13,7 +13,6 @@ def _readme_python_block() -> str:
     text = README.read_text()
     blocks = re.findall(r"```python\n(.*?)```", text, flags=re.S)
     assert blocks, "no python fence in README"
-    # First fence is the quickstart.
     return blocks[0]
 
 
